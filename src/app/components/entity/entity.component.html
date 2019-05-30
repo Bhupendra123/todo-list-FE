@@ -1,0 +1,45 @@
+<fieldset class="form-group">
+  <header class="pageTitle">Entity Form:</header>
+  <form [formGroup]="entityForm">
+    <div class="input-wrapper">
+      <label class="input-title">Title</label>
+      <input type="text" name="title" formControlName="title">
+      <div *ngIf="title.touched && title.invalid" class="err-msg">
+        <div *ngIf="title.errors?.required">Title is Required.</div>
+      </div>
+    </div>
+    <div class="input-wrapper">
+      <label class="input-title">Description</label>
+      <input type="text" name="description" formControlName="description">
+      <div *ngIf="description.touched && description.invalid" class="err-msg">
+        <div *ngIf="description.errors?.required">Description is Required.</div>
+      </div>
+    </div>
+    <div class="input-wrapper">
+      <label class="input-title">Date</label>
+      <input type="date" name="date" formControlName="date">
+      <div *ngIf="date.touched && date.invalid" class="err-msg">
+        <div *ngIf="date.errors?.required">Date is required.</div>
+      </div>
+    </div>
+    <div class="input-wrapper">
+      <label class="input-title">Time</label>
+      <input type="time" name="tempTime" formControlName="tempTime">
+      <div *ngIf="tempTime.touched && tempTime.invalid" class="err-msg">
+        <div *ngIf="tempTime.errors?.required">Time is required.</div>
+      </div>
+      <div *ngIf="entityForm.invalid" class="err-msg">
+        <div *ngIf="entityForm.errors?.invalidDate">Date/Time should be greater than current date/time.</div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="!showSaveBtn && entity">
+    <mat-checkbox [(ngModel)]="entity.status">Done</mat-checkbox>
+  </div>
+  <div class="button-wrapper">
+    <button (click)="back()" mat-raised-button>Back</button>
+    <button *ngIf="!showSaveBtn" [disabled]="!entityForm.valid" (click)="updateEntity(entityForm.value)" mat-raised-button color="primary">Update</button>
+    <button *ngIf="!showSaveBtn" (click)="deleteEntity(entity)" mat-raised-button color="warn">Delete</button>
+    <button *ngIf="showSaveBtn" [disabled]="!entityForm.valid" (click)="createEntity(entityForm.value)" mat-raised-button color="primary">Save</button>
+  </div>
+</fieldset>

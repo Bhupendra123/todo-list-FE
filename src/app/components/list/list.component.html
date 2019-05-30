@@ -1,0 +1,43 @@
+<div class="body-wrapper">
+  <div class="inner-wrap">
+    <div class="float-L">
+      <div class="button-wrapper">
+        <button type="button" name="button" [routerLink]="['/entity', '']"  mat-raised-button color="primary"><span class="icon-plus">+</span> <span class="set-text">AddNew</span></button>
+      </div>
+    </div>
+    <div class="float-R">
+      <div class="select-filter">
+        <select class="float-R" [(ngModel)]="filterData">
+          <option class="optionWrap" value="all">All</option>
+          <option class="optionWrap" value="false">Todo</option>
+          <option class="optionWrap" value="true">Done</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <ul>
+    <li *ngFor="let entity of entities">
+      <div *ngIf="filterData=='all' || ((filterData=='true'? true:false) == entity.status)">
+        <div class="flex-box">
+          <div class="flex-box flex-item">
+            <div class="flex-none">
+              <mat-checkbox [(ngModel)]="entity.selected" (click)="toggleSelectEntity(entity)"></mat-checkbox>
+            </div>
+            <div class="flex-item">
+              <div class="item-text" [routerLink]="['/entity', entity._id]">
+                <span class="title">{{entity.title}}</span><br/>
+                <span class="description">{{entity.description}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-none">
+            <mat-checkbox [(ngModel)]="entity.status" (change)="updateEntity(entity)"></mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="button-wrapper">
+    <button (click)="multipleDeleteEntity()" [disabled]="deleteListItem.length==0" mat-raised-button color="warn">Delete</button>
+  </div>
+</div>
